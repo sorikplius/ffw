@@ -1,0 +1,150 @@
+<?php
+
+/**
+ * @file
+ *
+ */
+
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function category_rating_node_insert(Drupal\Core\Entity\EntityInterface $entity)
+{
+    if ($entity->bundle() == 'book') {
+        $targets = $entity->get('field_genre')->getValue();
+        foreach ($targets as $target) {
+            $tid = $target['target_id'];
+            $node_value = \Drupal::config('category_rating.settings')->get('node_rating');
+            category_rating_update_rating($tid, $node_value);
+        }
+    }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function category_rating_node_update(Drupal\Core\Entity\EntityInterface $entity)
+{
+    if ($entity->bundle() == 'book') {
+        /** @var \Drupal\node\Entity\Node $original */
+        $original = $entity->original;
+        $old_targets = $original->get('field_genre')->getValue();
+        $new_targets = $entity->get('field_genre')->getValue();
+        $old_tids = array_column($old_targets, 'target_id');
+        $new_tids = array_column($new_targets, 'target_id');
+
+        $tids_downgrade = array_diff($old_tids, $new_tids);
+        $tids_upgrade = array_diff($new_tids, $old_tids);
+
+        $node_value = \Drupal::config('category_rating.settings')->get('node_rating');
+        if (!empty($tids_downgrade)) {
+            foreach ($tids_downgrade as $tid) {
+                category_rating_update_rating($tid, -$node_value);
+            }
+        }
+        if (!empty($tids_upgrade)) {
+            foreach ($tids_upgrade as $tid) {
+                category_rating_update_rating($tid, $node_value);
+            }
+        }
+    }
+}
+
+/**
+ * Custom function that adds $value to $tid.
+ *
+ * @param $tid
+ * @param $value
+ */
+function category_rating_update_rating($tid, $value) {
+    // SELECT.
+    $query = \Drupal::database()->select('category_rating', 'catr');
+    $query->fields('catr', ['rating']);
+    $query->condition('tid', $tid);
+    $result = $query->execute()->fetchAssoc();
+
+    // INSERT OR UPDATE.
+    if ($result === FALSE && $value >= 0) {
+        // INSERT.
+        $query = \Drupal::database()->insert('category_rating');
+        $query->fields([
+            'tid' => $tid,
+            'rating' => $value
+        ]);
+        $query->execute();
+    }
+    else {
+        // UPDATE.
+        $rating = $result['rating'];
+        $query = \Drupal::database()->update('category_rating');
+        $query->fields([
+            'rating' => $rating + $value
+        ]);
+        $query->condition('tid', $tid);
+        $query->execute();
+    }
+
+}
+
+/**
+ * Implements hook_views_data().
+ */
+function category_rating_views_data()
+{
+    $data = [];
+    $data['category_rating'] = [
+        'table' => [
+            'group' => t('Rating'),
+            'provider' => t('category_rating'),
+            'base' => [
+                'field' => 'tid',
+                'title' => t('Category Rating'),
+                'help' => t('Shows field_genre Taxonomy Term ID.')
+            ]
+        ],
+        'tid' => [
+            'title' => t('Taxonomy Term ID'),
+            'help' => t('Shows field_genre Taxonomy Term ID.'),
+            'field' => array(
+                'id' => 'taxonomy_index_tid',
+                'no group by' => TRUE,
+                'click sortable' => FALSE,
+            ),
+            'sort' => array(
+                'id' => 'numeric',
+            ),
+            'filter' => array(
+                'id' => 'numeric',
+            ),
+            'argument' => array(
+                'id' => 'string',
+            ),
+            'relationship' => array(
+                'base' => 'taxonomy_term_field_data',
+                'field' => 'tid',
+                'label' => t('Term'),
+                'id' => 'standard',
+            ),
+
+        ],
+        'rating' => [
+            'title' => t('Rating'),
+            'help' => t('Shows the value of the Rating.'),
+            'field' => array(
+                'id' => 'numeric',
+            ),
+            'sort' => array(
+                'id' => 'standard',
+            ),
+            'filter' => array(
+                'id' => 'numeric',
+            ),
+            'argument' => array(
+                'id' => 'string',
+            ),
+        ]
+    ];
+    return $data;
+}
+

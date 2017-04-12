@@ -1,0 +1,6 @@
+cat.the.cat.content:
+  path: '/cat/page'
+  defaults:
+    _form: '\Drupal\cat_the_cat\Form\CatCustomForm'
+  requirements:
+    _permission: 'access content'

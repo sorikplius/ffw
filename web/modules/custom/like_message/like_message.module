@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ */
+use Drupal\user\UserDataInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function like_message_form_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+    $account = $form_state->getFormObject()->getEntity();
+
+    /** @var UserDataInterface $userData */
+    $userData = \Drupal::service('user.data');
+    $default = $userData->get('like_message', $account->id(), 'show_like_message');
+
+    $form['like_message'] = [
+        '#type' => 'details',
+        '#title' => t('Like Message Settings'),
+        '#open' => TRUE
+    ];
+    $form['like_message']['show_like_message'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Show like message.'),
+        '#default_value' => $default
+    ];
+    $form['actions']['submit']['#submit'][] = 'like_message_form_user_form_submit';
+}
+
+function like_message_form_user_form_submit($form, \Drupal\Core\Form\FormStateInterface $form_state) {
+    /** @var \Drupal\user\Entity\User $account */
+    $account = $form_state->getFormObject()->getEntity();
+
+    /** @var UserDataInterface $userData */
+    $userData = \Drupal::service('user.data');
+    $userData->set('like_message', $account->id(), 'show_like_message', $form_state->getValue('show_like_message'));
+}

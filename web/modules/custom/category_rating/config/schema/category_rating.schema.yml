@@ -1,0 +1,9 @@
+category_rating.settings:
+  type: config_object
+  mapping:
+    node_rating:
+      type: float
+      label: 'Node Rating'
+    comment_rating:
+      type: float
+      label: 'Comment Rating'

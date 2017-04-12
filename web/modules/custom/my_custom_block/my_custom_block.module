@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ *
+ */
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function my_custom_block_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+    $nid = $entity->id();
+    $uid = \Drupal::currentUser()->id();
+
+    my_custom_block_add_count($nid, $uid);
+}
+
+/**
+ * Custom function that adds count to current node (by specific UID).
+ *
+ * @param $nid int
+ *   ID of the node entity for which we have to add 1 to the view count.
+ *
+ * @param $uid int
+ *   The User ID that viewed the node latest.
+ */
+function my_custom_block_add_count($nid, $uid) {
+    $query = \Drupal::database()->select('my_custom_block_data', 'mcb');
+    $query->fields('mcb', ['count_all', 'count_day', 'timestamp']);
+    $query->condition('mcb.nid', $nid);
+    $values = $query->execute()->fetchAssoc();
+
+    // We create a new value.
+    if ($values == FALSE) {
+        $query = \Drupal::database()->insert('my_custom_block_data');
+        $query->fields([
+            'nid' => $nid,
+            'count_all' => '1',
+            'count_day' => '1',
+            'timestamp' => time(),
+            'uid' => $uid
+        ]);
+        $query->execute();
+    }
+    else {
+        $count_all = $values['count_all'];
+        $count_day = $values['count_day'];
+        $timestamp = $values['timestamp'];
+
+        // Calculate count_day.
+        $day_last_visit = date('Y-m-d', $timestamp);
+        $day_today = date('Y-m-d', time());
+        if ($day_last_visit != $day_today) {
+            $count_day = 0;
+        }
+
+        // We update existing value.
+        $query = \Drupal::database()->update('my_custom_block_data');
+        $query->fields([
+            'count_all' => $count_all + 1,
+            'count_day' => $count_day + 1,
+            'timestamp' => time(),
+            'uid' => $uid
+        ]);
+        $query->condition('nid', $nid);
+        $query->execute();
+    }
+}

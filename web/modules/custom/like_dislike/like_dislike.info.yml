@@ -1,0 +1,5 @@
+name: like_dislike
+pacage: Custom
+type: module
+description: Create a Vote field.
+core: 8.x

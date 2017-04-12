@@ -1,0 +1,5 @@
+services:
+  like_message.like_message_event_subscriber:
+    class: Drupal\like_message\EventSubscriber\LikeMessageEventSubscriber
+    tags:
+      - { name: 'event_subscriber' }

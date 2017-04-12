@@ -1,0 +1,7 @@
+category_rating.settings:
+ path: '/admin/rating/settings'
+ defaults:
+   _title: 'Application form'
+   _form: '\Drupal\category_rating\Form\ModuleConfigurationForm'
+ requirements:
+   _permission: 'access content'

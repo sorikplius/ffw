@@ -1,0 +1,5 @@
+name: World Module
+pacage: Custom
+type: module
+description: Create a page showing.
+core: 8.x

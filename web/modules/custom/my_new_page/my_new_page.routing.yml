@@ -1,0 +1,17 @@
+my.new.page.content:
+  path: '/new/page'
+  defaults: 
+    _form: '\Drupal\my_new_page\Form\ContributePageForm'
+  requirements: 
+    _permission: 'access content'
+
+
+my.new.page.content_delete:
+  path: '/new/page/delete/{node}'
+  defaults:
+    _form: '\Drupal\my_new_page\Form\ContributePageFormConfirm'
+    _title: 'Delete Node'
+  requirements:
+    _permission: 'access content'
+    node: \d+
+

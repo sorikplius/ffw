@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ *
+ */
+
+function category_rating_schema() {
+    $schema['category_rating'] = array(
+        'description' => 'Ratings for categories.',
+        'fields' => array(
+            'tid' => array(
+                'description' => 'The {term} id.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'rating' => array(
+                'description' => 'Value of the rating.',
+                'type' => 'float',
+                'not null' => TRUE,
+                'unsigned' => TRUE,
+                'default' => 0,
+            ),
+        ),
+        'primary key' => array('tid'),
+    );
+    return $schema;
+}
+
