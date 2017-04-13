@@ -1,0 +1,15 @@
+uuid: bb445128-14bb-475e-9ea2-cea8c00b776b
+langcode: en
+status: true
+dependencies: {  }
+name: ww
+label: ww
+effects:
+  2040d1ec-d930-4432-bc61-7e8cd61d13a1:
+    uuid: 2040d1ec-d930-4432-bc61-7e8cd61d13a1
+    id: image_scale
+    weight: 1
+    data:
+      width: 150
+      height: 200
+      upscale: false

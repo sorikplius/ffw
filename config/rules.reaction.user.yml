@@ -1,0 +1,48 @@
+uuid: 620c25ba-79f6-44ad-9f8c-5700ba661c40
+langcode: en
+status: true
+dependencies: {  }
+id: user
+label: user
+events:
+  -
+    event_name: 'rules_entity_insert:flagging'
+description: ''
+tags:
+  - ''
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: a1b9a58c-e2bc-457f-a8f5-b2cb3232f543
+  conditions:
+    id: rules_and
+    uuid: 03d59f91-089c-4bc9-8a2c-623a9fbe0e31
+    conditions: {  }
+  actions:
+    id: rules_action_set
+    uuid: 009f8e6f-969d-4fa3-97b9-7c703eb287f0
+    actions:
+      -
+        id: rules_action
+        uuid: 6be9416a-5d7d-4ff0-b4dc-93763be5d416
+        context_values:
+          to:
+            - smtp@gmail.com
+          subject: subject
+          message: 'user:{{flagging.uid.entity.name}} flagget {{flagging.flagged_entity.entity.title}} as Favorite book'
+          reply: ''
+          language: ''
+        context_mapping: {  }
+        context_processors:
+          to:
+            rules_tokens: {  }
+          subject:
+            rules_tokens: {  }
+          message:
+            rules_tokens: {  }
+          reply:
+            rules_tokens: {  }
+          language:
+            rules_tokens: {  }
+        provides_mapping: {  }
+        action_id: rules_send_email

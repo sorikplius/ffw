@@ -1,0 +1,13 @@
+uuid: 48cec07e-2432-4931-8ace-fe1c183ebd32
+langcode: en
+status: true
+dependencies:
+  module:
+    - flag
+id: flag_action.book.flag
+label: 'Flag this item'
+type: node
+plugin: 'flag_action:book.flag'
+configuration:
+  flag_id: book
+  flag_action: flag

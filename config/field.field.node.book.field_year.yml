@@ -1,0 +1,21 @@
+uuid: 7066a742-a94e-400b-89be-fe39d0f38f01
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_year
+    - node.type.book
+id: node.book.field_year
+field_name: field_year
+entity_type: node
+bundle: book
+label: Year
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: null
+default_value_callback: ''
+settings: {  }
+field_type: timestamp

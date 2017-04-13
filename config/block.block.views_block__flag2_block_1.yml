@@ -1,0 +1,24 @@
+uuid: 532d94c0-40d7-44d0-afe8-acd5e89fb1c7
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.flag2
+  module:
+    - views
+  theme:
+    - bartik
+id: views_block__flag2_block_1
+theme: bartik
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'views_block:flag2-block_1'
+settings:
+  id: 'views_block:flag2-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }

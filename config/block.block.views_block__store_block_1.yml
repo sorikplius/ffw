@@ -1,0 +1,40 @@
+uuid: 1cf6e71f-9143-45d1-accb-6d81ceabc9d1
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.store
+  module:
+    - ctools
+    - node
+    - views
+  theme:
+    - bartik
+id: views_block__store_block_1
+theme: bartik
+region: content
+weight: -4
+provider: null
+plugin: 'views_block:store-block_1'
+settings:
+  id: 'views_block:store-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      store: store
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  node_type:
+    id: node_type
+    bundles:
+      store: store
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

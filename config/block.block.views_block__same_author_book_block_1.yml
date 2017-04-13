@@ -1,0 +1,40 @@
+uuid: d1b72458-121e-4a17-b8d8-4c673fffbabb
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.same_author_book
+  module:
+    - ctools
+    - node
+    - views
+  theme:
+    - bartik
+id: views_block__same_author_book_block_1
+theme: bartik
+region: content
+weight: -5
+provider: null
+plugin: 'views_block:same_author_book-block_1'
+settings:
+  id: 'views_block:same_author_book-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      author: author
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  node_type:
+    id: node_type
+    bundles:
+      author: author
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

@@ -1,0 +1,28 @@
+uuid: 592763e4-e5c4-42ef-8a4c-ab9e9ff4dfea
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - my_custom_block
+  theme:
+    - bartik
+id: helloblock
+theme: bartik
+region: content
+weight: -11
+provider: null
+plugin: hello
+settings:
+  id: hello
+  label: 'Hello block'
+  provider: my_custom_block
+  label_display: visible
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      book: book
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

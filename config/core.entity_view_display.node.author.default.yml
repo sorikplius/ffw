@@ -1,0 +1,53 @@
+uuid: c01da24f-eae7-464e-af6e-df1e35510876
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.author.body
+    - field.field.node.author.field_author_name
+    - field.field.node.author.field_birthday2
+    - field.field.node.author.field_image
+    - node.type.author
+  module:
+    - datetime
+    - image
+    - text
+    - user
+id: node.author.default
+targetEntityType: node
+bundle: author
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  field_author_name:
+    weight: 2
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_birthday2:
+    weight: 3
+    label: inline
+    settings:
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_plain
+  field_image:
+    weight: 1
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+  links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

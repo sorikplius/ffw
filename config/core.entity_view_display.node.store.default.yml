@@ -1,0 +1,24 @@
+uuid: 918e718c-5089-49d3-bf89-b8e532a6151f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.store.body
+    - node.type.store
+  module:
+    - text
+    - user
+id: node.store.default
+targetEntityType: node
+bundle: store
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden: {  }

@@ -1,0 +1,40 @@
+uuid: 81f8650b-06df-45c9-93b8-9b8f54af0d82
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.similar_book
+  module:
+    - ctools
+    - node
+    - views
+  theme:
+    - bartik
+id: views_block__similar_book_block_1
+theme: bartik
+region: content
+weight: -2
+provider: null
+plugin: 'views_block:similar_book-block_1'
+settings:
+  id: 'views_block:similar_book-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      book: book
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  node_type:
+    id: node_type
+    bundles:
+      book: book
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

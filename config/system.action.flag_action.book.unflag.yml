@@ -1,0 +1,13 @@
+uuid: 85a3f2d9-fefe-4751-87db-a8de3a50e799
+langcode: en
+status: true
+dependencies:
+  module:
+    - flag
+id: flag_action.book.unflag
+label: 'Unflag this item'
+type: node
+plugin: 'flag_action:book.unflag'
+configuration:
+  flag_id: book
+  flag_action: unflag
